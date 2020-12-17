@@ -1,0 +1,9 @@
+package com.eventplanning.openbar;
+
+import java.lang.Number;
+
+rule "hookTest"
+	dialect "mvel"
+	when
+	then
+end
