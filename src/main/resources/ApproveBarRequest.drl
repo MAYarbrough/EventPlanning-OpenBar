@@ -12,8 +12,8 @@ rule "ApproveBarRequest"
 		BarRequest( guestName == $guestName
 		          , status == "approved"
 		          , $prevAlc : totalAlcohol
-		          , this meets [30m] $currentRequest
-		          , this before $currentRequest
+		          //, this meets [30m] $currentRequest
+		          //, this before $currentRequest
 		          )
 		//, sum($prevAlc)) 
 		//eval( $requestedAlc + $previousAlc < 200 )
