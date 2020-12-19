@@ -1,0 +1,17 @@
+package com.eventplanning.openbar;
+
+import java.lang.Number;
+import com.eventplanning.dataobjects.BarRequest;
+
+rule "DenyBarRequest"
+	dialect "mvel"
+	when
+		$currentRequest : BarRequest( status == "requested" , $guestName : guestName != null , $requestedAlc : totalAlcohol, $currentTime : requestTime)
+		Number( $previousAlc : intValue() > 0 ) from accumulate ( BarRequest( guestName == $guestName , status == "approved" , $prevAlc : totalAlcohol, this meets [30m] $currentRequest , this before $currentRequest ),
+			sum($prevAlc)) 
+		eval( $requestedAlc + $previousAlc > 200 )
+	then
+		modify( $currentRequest ) {
+				setStatus( "denied" )
+		}
+end
