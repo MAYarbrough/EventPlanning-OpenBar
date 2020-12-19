@@ -1,9 +1,14 @@
 package com.eventplanning.openbar;
 
 import java.lang.Number;
+import com.eventplanning.dataobjects.BarRequest;
 
 rule "RemoveOldRequests"
 	dialect "mvel"
 	when
+		not (BarRequest( status == "requested" )) 
+		BarRequest( $lastTime : requestTime)
+		$olderRequest : BarRequest( requestTime before $lastTime )
 	then
+		retract( $olderRequest );
 end
