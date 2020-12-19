@@ -1,1 +1,1 @@
-'com.eventplanning.dataobjects.BarRequest.status' : ["requested","denied","approved"]
+'BarRequest.status' : ["requested","denied","approved"]
