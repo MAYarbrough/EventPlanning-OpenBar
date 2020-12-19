@@ -11,4 +11,5 @@ rule "RemoveOldRequests"
 		$olderRequest : BarRequest( requestTime before $lastTime )
 	then
 		retract( $olderRequest );
+		System.out.println("Removing request for " + $olderRequest.getGuestName() + " at " + $olderRequest.getRequestTime());
 end
