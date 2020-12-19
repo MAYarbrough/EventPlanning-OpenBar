@@ -8,18 +8,18 @@ rule "ApproveBarRequest"
 	agenda-group "open-bar"
 	when
 		$currentRequest : BarRequest( status == "requested" , $guestName : guestName != null , $requestedAlc : totalAlcohol, $currentTime : requestTime)
-		//Number( $previousAlc : intValue() > 0 ) from accumulate ( 
+		Number( $previousAlc : intValue() ) from accumulate ( 
 		BarRequest( guestName == $guestName
 		          , status == "approved"
 		          , $prevAlc : totalAlcohol
-		          //, this meets [30m] $currentRequest
-		          //, this before $currentRequest
+		          , this meets [30m] $currentRequest
+		          , this before $currentRequest
 		          )
-		//, sum($prevAlc)) 
-		//eval( $requestedAlc + $previousAlc < 200 )
+		, sum($prevAlc)) 
+		eval( $requestedAlc + $previousAlc < 200 )
 	then
-		//modify( $currentRequest ) {
-		//		setStatus( "approved" )
-		//}
+		modify( $currentRequest ) {
+				setStatus( "approved" )
+		}
 		System.out.println("Approving request for " + $guestName);
 end
