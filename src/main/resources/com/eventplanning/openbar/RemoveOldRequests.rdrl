@@ -1,0 +1,9 @@
+package com.eventplanning.openbar;
+
+import java.lang.Number;
+
+rule "RemoveOldRequests"
+	dialect "mvel"
+	when
+	then
+end
