@@ -5,6 +5,7 @@ import com.eventplanning.dataobjects.BarRequest;
 
 rule "DenyBarRequest"
 	dialect "mvel"
+	agenda-group "open-bar"
 	when
 		$currentRequest : BarRequest( status == "requested" , $guestName : guestName != null , $requestedAlc : totalAlcohol, $currentTime : requestTime)
 		Number( $previousAlc : intValue() > 0 ) from accumulate ( BarRequest( guestName == $guestName , status == "approved" , $prevAlc : totalAlcohol, this meets [30m] $currentRequest , this before $currentRequest ),
