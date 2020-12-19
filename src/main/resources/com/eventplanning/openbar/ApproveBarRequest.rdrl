@@ -5,6 +5,7 @@ import com.eventplanning.dataobjects.BarRequest;
 
 rule "ApproveBarRequest"
 	dialect "mvel"
+	agenda-group "open-bar"
 	when
 		$currentRequest : BarRequest( status == "requested" , $guestName : guestName != null , $requestedAlc : totalAlcohol, $currentTime : requestTime)
 		Number( $previousAlc : intValue() > 0 ) from accumulate ( BarRequest( guestName == $guestName , status == "approved" , $prevAlc : totalAlcohol, this meets [30m] $currentRequest , this before $currentRequest ),
@@ -14,4 +15,5 @@ rule "ApproveBarRequest"
 		modify( $currentRequest ) {
 				setStatus( "approved" )
 		}
+		System.out.println("Approving request for " + $guestName);
 end
